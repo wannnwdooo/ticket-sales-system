@@ -12,7 +12,7 @@ export const plainConfig: Config = {
     poolSize: Number(process.env.PG_POOL_SIZE),
   },
   mongo: {
-    uri: process.env.MONGODB_URI
+    uri: process.env.MONGODB_URI,
   },
   http: {
     port: Number(process.env.HTTP_PORT),
@@ -21,7 +21,7 @@ export const plainConfig: Config = {
     defaultClientTimeout: Number(process.env.HTTP_DEFAULT_CLIENT_TIMEOUT),
   },
   logger: {
-    level: (process.env.LOG_LEVEL) as LogLevel,
+    level: process.env.LOG_LEVEL as LogLevel,
   },
   redis: {
     host: process.env.REDIS_HOST,
@@ -31,5 +31,5 @@ export const plainConfig: Config = {
   jwt: {
     access: process.env.JWT_ACCESS_SECRET,
     refresh: process.env.JWT_REFRESH_SECRET,
-  }
+  },
 };
