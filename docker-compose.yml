@@ -1,0 +1,54 @@
+version: '3.8'
+services:
+  pg:
+    image: postgres:16
+    container_name: pg
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./data/pg:/data/db/pg
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    env_file:
+      - .env
+    volumes:
+      - ./data/mongo:/data/db
+    ports:
+      - "27017:27017"
+    command: --auth
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSWORD"
+    env_file:
+      - .env
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    container_name: nestjs-app
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on:
+      - pg
+      - mongo
+      - redis
+    restart: always
+    environment:
+      - PG_WRITE_CONNECTION_STRING=postgresql://postgres:postgres@pg:5432/postgres
+      - PG_READ_CONNECTION_STRING=postgresql://postgres:postgres@pg:5432/postgres
+      - MONGODB_URI=mongodb://mongo:mongo@mongo:27017/admin
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=redis
+    command: npm run start:dev
