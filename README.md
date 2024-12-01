@@ -33,5 +33,5 @@ $ npm i
 $ cp .env.example .env
 
 # app start
-$ docker-compose up -d
+$ sudo docker compose up
 ```
