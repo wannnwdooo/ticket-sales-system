@@ -14,6 +14,8 @@ For scaling, you can select user, event, booking+transaction as separate microse
 ## TODO
 
 This is a very simple implementation, which has its own flaws that can be improved:
+ - Add business errors
+ -Transfer work with entities from the service to DAL
  - Add migrations for the database
  - Writing tests
  - Adding balance/wallet that the user can top up
